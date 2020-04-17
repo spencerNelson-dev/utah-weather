@@ -19,7 +19,7 @@ export default function Map() {
       height="100vh"
       mapStyle="mapbox://styles/spencernelson144/ck94engu801yy1il64mhbkdy6"
       onViewportChange={nextViewport => setViewport(nextViewport)}
-      mapboxApiAccessToken={process.env.MAPBOX_TOKEN}
+      mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
     />
   );
 }
