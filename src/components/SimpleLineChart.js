@@ -1,6 +1,23 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts'
 import weatherData from '../data/utahWeather.json'
+import temperatures from '../data/herrimanTemps.json'
+
+function reduceData(data){
+    let reducedData = data.reduce((prev, current, index) => {
+        
+        if(index === 0){
+            prev.push(current)
+        } else if(index % 100 === 0){
+            prev.push(current)
+        }
+
+        return prev
+        
+    },[])
+
+    return reducedData
+}
 
 function makeDataObjects(xArr, yArr) {
 
@@ -10,7 +27,7 @@ function makeDataObjects(xArr, yArr) {
 
         resultObjArr.push({
             date_time: xArr[index],
-            wind_speed_set_1: yArr[index]
+            air_temp: yArr[index]
         })
     }
 
@@ -23,14 +40,17 @@ function SimpleLineChart(props) {
 
     const [data, setData] = React.useState([])
 
-    const yLabel = 'Wind Speed'
+    const yLabel = 'Air Temp degree F'
 
     const getData = () => {
 
-        const dateTimeArr = weatherData.STATION[0].OBSERVATIONS.date_time
-        const windSpeedArr = weatherData.STATION[0].OBSERVATIONS.wind_speed_set_1
+        // const dateTimeArr = weatherData.STATION[0].OBSERVATIONS.date_time
+        // const windSpeedArr = weatherData.STATION[0].OBSERVATIONS.wind_speed_set_1
 
-        setData(makeDataObjects(dateTimeArr, windSpeedArr))
+        const dateTimeArr = temperatures.date_time
+        const tempArr = temperatures.air_temp
+
+        setData(reduceData(makeDataObjects(dateTimeArr, tempArr)))
     }
 
     React.useEffect(() => {
@@ -46,12 +66,12 @@ function SimpleLineChart(props) {
     return (
         <div>
             <div>
-                <LineChart data={data} width={1200} height={600}>
+                <LineChart data={data} width={1800} height={600}>
                     <XAxis dataKey="date_time" interval={25} label='Date' />
                     <YAxis label={yLabel} />
                     <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
                     <Tooltip />
-                    <Line type="monotone" dataKey="wind_speed_set_1" stroke="#8884d8" />
+                    <Line type="monotone" dataKey="air_temp" stroke="#8884d8" />
                 </LineChart>
             </div>
         </div>

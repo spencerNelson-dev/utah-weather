@@ -1,5 +1,6 @@
 import React from 'react';
 import Map from './Map'
+import SimpleLineChart from './SimpleLineChart'
 
 
 function MainPage(props) {
@@ -18,7 +19,8 @@ function MainPage(props) {
                     Site Created by <a href='http://spencer-nelson.com/'>Spencer Nelson</a>
                 </p>
             </div>
-            <Map></Map>
+            {/* <Map></Map> */}
+            <SimpleLineChart></SimpleLineChart>
         </div>
     );
 }
